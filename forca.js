@@ -8,9 +8,15 @@ let jogoAutomatico = true;
 
 let pontuacao = 0;
 
+let running = false;
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
+let interval;
 carregaListaAutomatica();
 
 criarPalavraSecreta();
+
 function criarPalavraSecreta() {
   const indexPalavra = parseInt(Math.random() * palavras.length);
 
@@ -21,6 +27,8 @@ function criarPalavraSecreta() {
 }
 
 montarPalavraNaTela();
+startStop();
+
 function montarPalavraNaTela() {
   const categoria = document.getElementById("categoria");
   categoria.innerHTML = palavraSecretaCategoria;
@@ -303,14 +311,71 @@ async function piscarBotaoJogarNovamente(querJogar) {
   }
 }
 
+
+
+function startStop() {
+    if (running) {
+        clearInterval(interval);
+        document.getElementById("startStop").textContent = "Iniciar";
+    } else {
+        interval = setInterval(updateDisplay, 1000);
+        document.getElementById("startStop").textContent = "Parar";
+    }
+    running = !running;
+}
+
+function checkForm(){
+    const tempo = document.querySelector("div#display").innerHTML
+    console.log(tempo);
+    startStop()
+    window.location.href = "./marcar.php"
+}
+
+
+function updateDisplay() {
+    seconds++;
+    if (seconds === 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes === 60) {
+            minutes = 0;
+            hours++;
+        }
+    }
+
+    const display = document.getElementById("display");
+    display.textContent = formatTime(hours) + ":" + formatTime(minutes) + ":" + formatTime(seconds);
+}
+
+function formatTime(time) {
+    return time < 10 ? "0" + time : time;
+}
+
+function reset() {
+    clearInterval(interval);
+    running = false;
+    seconds = 0;
+    minutes = 0;
+    hours = 0;
+    document.getElementById("display").textContent = "00:00:00";
+    document.getElementById("startStop").textContent = "Iniciar";
+}
+
+             
+
 function redirecionar() {
-    console.log("tentavias: " + tentativas);
+    //console.log("tentavias: " + tentativas);
   if (tentativas <= 0) {
-    console.log("caiu aqui, perdeu");
-    window.location.href = "marcar.php?score=" + pontuacao;
+    //console.log("caiu aqui, perdeu");
+    window.location.href = "./marcar.php?perdeu=true&score=" + pontuacao;
   } 
   if(tentativas > 0){
-    console.log("caiu aqui, não perdeu");
-    window.location.href = "game.php?score=" + pontuacao;
+    //console.log("caiu aqui, não perdeu");
+    window.location.href = "./marcar.php?perdeu=false&score=" + pontuacao;
   }
+}
+
+
+function Desistir(){
+  window.location.href = "./marcar.php?perdeu=true&score=" + pontuacao;
 }

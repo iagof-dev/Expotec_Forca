@@ -29,7 +29,7 @@ body{
 }
 
 #imagem{
-    background-image: url("../img/forca.png");
+    background-image: url("./img/forca.png");
     width: 234px;
     height: 272px;
     margin: 10px;

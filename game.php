@@ -35,6 +35,7 @@ $palavra = (new db())->getRandomWord();
 </head>
 <body>
     <div class="container">
+        <h1>Pontuação: <?= (new player())->getScore(); ?></h1>
         <div id="imagem"></div>
 
         <div id="palavra-secreta">
@@ -112,63 +113,15 @@ $palavra = (new db())->getRandomWord();
 
     <div id="display">00:00:00</div>
 
+    <div class="ALINHAR">
+        <!-- <button id="startStop" onclick="startStop()">Iniciar</button>
+        <button id="limpar" onclick="reset()">Resetar</button> -->
+        <button id="terminar" onclick="Desistir();">Desistir</button>
+        
     
-    <script>
-        let running = false;
-        let seconds = 0;
-        let minutes = 0;
-        let hours = 0;
-        let interval;
-    
-        function startStop() {
-            if (running) {
-                clearInterval(interval);
-                document.getElementById("startStop").textContent = "Iniciar";
-            } else {
-                interval = setInterval(updateDisplay, 1000);
-                document.getElementById("startStop").textContent = "Parar";
-            }
-            running = !running;
-        }
+    </div>
 
-        function checkForm(){
-            const tempo = document.querySelector("div#display").innerHTML
-            startStop()
-        }
 
-        startStop()
-    
-        function updateDisplay() {
-            seconds++;
-            if (seconds === 60) {
-                seconds = 0;
-                minutes++;
-                if (minutes === 60) {
-                    minutes = 0;
-                    hours++;
-                }
-            }
-    
-            const display = document.getElementById("display");
-            display.textContent = formatTime(hours) + ":" + formatTime(minutes) + ":" + formatTime(seconds);
-        }
-    
-        function formatTime(time) {
-            return time < 10 ? "0" + time : time;
-        }
-    
-        function reset() {
-            clearInterval(interval);
-            running = false;
-            seconds = 0;
-            minutes = 0;
-            hours = 0;
-            document.getElementById("display").textContent = "00:00:00";
-            document.getElementById("startStop").textContent = "Iniciar";
-        }
-
-                        
-    </script>
         </form>  
 
 

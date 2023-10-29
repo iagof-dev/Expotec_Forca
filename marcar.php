@@ -1,32 +1,40 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 ob_start();
 
 require_once(__DIR__ . "/model/jogador.php");
 $nome = (new player())->getName();
 
-if(empty($nome) || !isset($nome)){
+if (empty($nome) || !isset($nome)) {
     header("Location: index.php");
 }
 
-$score = 0;
 require_once(__DIR__ . "/model/database.php");
 $db = new db();
+$score = 0;
 
+$perdeu = $_GET['perdeu'];
 
-if(empty($_GET['score']) || !isset($_GET['score'])){
+if (empty($_GET['score']) || !isset($_GET['score'])) {
     $score = (new player())->getScore();
-    // echo('jogou varias:' . (new player())->getScore() . '<br>');
-}
-else{
+} else {
     $score = (new player())->getScore() + $_GET['score'];
-    // echo('Jogou varias: '. (new player())->getScore() . '<br>');
-    // echo('Jogou 1: '.$_GET['score']. '<br>');
-
 }
 
-
-
-$db->registrarPontuacao($nome, $score);
-
-header("Location: index.php");
+if ($perdeu == 'true') {
+    echo ('perdeu');
+    try {
+        $db->registrarPontuacao($nome, $score);
+    } catch (Exception $e) {
+        echo ("Não foi possivel registrar pontuação!\n" . $e->getMessage());
+    }
+    session_destroy();
+    header("Location: index.php");
+} else {
+    //echo ('não perdeu');
+    (new player())->setScore($score);
+    header("Location: game.php");
+}

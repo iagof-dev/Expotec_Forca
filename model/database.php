@@ -4,8 +4,8 @@ class db
 {
 
     private $ip = "api.iagofragnan.com.br";
-    private $user = "dudak";
-    private $pass = "132490Kj@br=";
+    private $user = "";
+    private $pass = "";
     private $port = 3306;
     private $database = "expotec_duda";
     public $con;
@@ -18,7 +18,8 @@ class db
 
     function registrarPontuacao($nome, $pontuacao)
     {
-        $sql = "INSERT INTO jogadores values (default, '" . $nome . "', " . $pontuacao . ");";
+        //$date = "$hora:$minuto:$segundo";
+        $sql = "INSERT INTO jogadores values (default, '" . $nome . "', " . $pontuacao . ", null);";
         $this->con->query($sql);
     }
 

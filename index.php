@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-radius: 6px;
         }
 
-        form {
+        .box {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -56,32 +56,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin-bottom: 12px;
             box-sizing: border-box;
             border-radius: 8px;
+            color:black;
+            background-color: purple;
         }
 
-        button {
-            background-color: #730877;
-            color: white;
-            padding: 10px 15px;
+        button, input[type="submit"] {
+            color:white;
+            background-color: purple;
+            padding: 10px 125px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
+            transition: 0.5s
         }
+       
 
-        button:hover {
-            background-color: #fdb9ff;
+        button:hover, input[type="submit"]:hover {
+            background-color: plum;
+        }
+        #nome{
+            background-color:white;
+            cursor: pointer;
         }
     </style>
 
 </head>
 
 <body>
-    <form id="registrationForm" action="/index.php" method="post">
+    <div class="box">
+    <form id="registrationForm" action="./index.php" method="post">
         <label>Nome de Usuário:</label>
-        <input type="text" name="username" required>
+        <input id="nome" type="text" name="username" required>
         <input class="btn btn-primary" type="submit" value="Registrar">
-
     </form>
     <a href="ranking.php"><button class="btn btn-primary" >Ranking</button></a>
+    </div>
     
 </body>
 </html>
